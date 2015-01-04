@@ -1,8 +1,6 @@
 use std::io::Command;
-pub use self::vim::Vim;
 pub use self::kate::Kate;
 pub use self::emacs::Emacs;
-mod vim;
 mod kate;
 mod emacs;
 
