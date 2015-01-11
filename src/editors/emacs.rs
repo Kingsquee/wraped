@@ -14,7 +14,7 @@ impl Emacs {
 }
 
 impl EditorTrait for Emacs {
-    fn cursor(&mut self, row:uint, col:uint) {
+    fn cursor(&mut self, row:u64, col:u64) {
         self.args.push(format!("+{}:{}", row, col));
     }
 

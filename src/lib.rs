@@ -8,8 +8,8 @@ pub mod editors;
 impl Editor {
     pub fn new(name: &str) -> Option<Editor> {
         match name.to_ascii_lowercase().as_slice() {
-            "kate" => Some(Editor::Kate(box Kate::new())),
-            "emacs" => Some(Editor::Emacs(box Emacs::new())),
+            "kate" => Some(Editor::Kate(Box::new(Kate::new()))),
+            "emacs" => Some(Editor::Emacs(Box::new(Emacs::new()))),
             _ => None,
         }
     }
@@ -21,17 +21,17 @@ pub enum Editor {
 }
 
 impl EditorTrait for Editor {
-    fn cursor(&mut self, row:uint, col:uint) {
+    fn cursor(&mut self, row:u64, col:u64) {
         match self {
-            &Editor::Kate(ref mut e) => e.cursor(row, col),
-            &Editor::Emacs(ref mut e) => e.cursor(row, col),
+            &mut Editor::Kate(ref mut e) => e.cursor(row, col),
+            &mut Editor::Emacs(ref mut e) => e.cursor(row, col),
         }
     }
 
     fn open(&mut self, file:&Path) {
         match self {
-            &Editor::Kate(ref mut e) => e.open(file),
-            &Editor::Emacs(ref mut e) => e.open(file),
+            &mut Editor::Kate(ref mut e) => e.open(file),
+            &mut Editor::Emacs(ref mut e) => e.open(file),
         }
     }
 

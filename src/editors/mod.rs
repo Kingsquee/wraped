@@ -5,7 +5,7 @@ mod kate;
 mod emacs;
 
 pub trait EditorTrait {
-    fn cursor(&mut self, row:uint, col:uint);
+    fn cursor(&mut self, row:u64, col:u64);
     fn open(&mut self, file:&Path);
     fn get_command(&self) -> Command;
 }

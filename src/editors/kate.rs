@@ -14,7 +14,7 @@ impl Kate {
 }
 
 impl EditorTrait for Kate {
-    fn cursor(&mut self, row:uint, col:uint) {
+    fn cursor(&mut self, row:u64, col:u64) {
         self.args.push(format!("--line"));
         self.args.push(format!("{}", row));
         self.args.push(format!("--column"));
