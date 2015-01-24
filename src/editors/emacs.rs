@@ -28,7 +28,7 @@ impl EditorTrait for Emacs {
         for arg in self.args.iter() {
             command.arg(arg);
         }
-        println!("command: {}", command);
+        //println!("command: {:?}", command);
         command
     }
 }

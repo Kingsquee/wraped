@@ -30,7 +30,7 @@ impl EditorTrait for Kate {
         for arg in self.args.iter() {
             command.arg(arg);
         }
-        println!("command: {}", command);
+        //println!("command: {:?}", command);
         command
     }
 }
