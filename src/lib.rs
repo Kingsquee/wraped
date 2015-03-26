@@ -1,6 +1,10 @@
+#![feature(old_io)]
+#![feature(old_path)]
+#![feature(core)]
+use std::old_path::{Path, GenericPath};
 use editors::{Kate, Emacs};
 use std::ascii::AsciiExt;
-use std::io::Command;
+use std::old_io::Command;
 pub use editors::EditorTrait;
 
 pub mod editors;

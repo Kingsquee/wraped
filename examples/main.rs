@@ -1,20 +1,26 @@
+#![feature(old_io)]
+#![feature(old_path)]
+#![feature(core)]
+#![feature(os)]
 extern crate wraped;
 extern crate getopts;
 
 use std::os;
-use std::io::fs::File;
-use std::io::process::StdioContainer;
-use getopts::{optopt,getopts};
+use std::old_path::{Path};
+use std::old_io::Writer;
+use std::old_io::fs::File;
+use std::old_io::process::StdioContainer;
+use getopts::Options;
 use wraped::{Editor, EditorTrait};
 
 fn main() {
     // Program args
 
     let args: Vec<String> = os::args();
-    let opts = &[
-        optopt("e", "editor", "Open the state struct in the editor of choice.", "EDITOR")
-    ];
-    let matches = match getopts(args.tail(), opts) {
+    let mut opts = Options::new();
+    opts.optopt("e", "editor", "Open the state struct in the editor of choice.", "EDITOR");
+
+    let matches = match opts.parse(&args[1..]) {
         Ok(m) => { m }
         Err(f) => { panic!(f.to_string()) }
     };

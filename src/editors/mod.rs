@@ -1,4 +1,7 @@
-use std::io::Command;
+#![feature(old_io)]
+#![feature(old_path)]
+use std::old_path::{Path, GenericPath};
+use std::old_io::Command;
 pub use self::kate::Kate;
 pub use self::emacs::Emacs;
 mod kate;
