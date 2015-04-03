@@ -1,17 +1,16 @@
-#![feature(old_io)]
-#![feature(old_path)]
-#![feature(core)]
-use std::old_path::{Path, GenericPath};
+#![feature(convert)]
+
+use std::path::{Path};
 use editors::{Kate, Emacs};
 use std::ascii::AsciiExt;
-use std::old_io::Command;
+use std::process::Command;
 pub use editors::EditorTrait;
 
 pub mod editors;
 
 impl Editor {
     pub fn new(name: &str) -> Option<Editor> {
-        match name.to_ascii_lowercase().as_slice() {
+        match name.to_ascii_lowercase().as_str() {
             "kate" => Some(Editor::Kate(Box::new(Kate::new()))),
             "emacs" => Some(Editor::Emacs(Box::new(Emacs::new()))),
             _ => None,
@@ -32,7 +31,7 @@ impl EditorTrait for Editor {
         }
     }
 
-    fn open(&mut self, file:&Path) {
+    fn open(&mut self, file: &Path) {
         match self {
             &mut Editor::Kate(ref mut e) => e.open(file),
             &mut Editor::Emacs(ref mut e) => e.open(file),

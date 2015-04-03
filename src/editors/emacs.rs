@@ -1,7 +1,5 @@
-#![feature(old_io)]
-#![feature(old_path)]
-use std::old_path::{Path, GenericPath};
-use std::old_io::Command;
+use std::path::Path;
+use std::process::Command;
 use super::EditorTrait;
 
 pub struct Emacs {
@@ -23,7 +21,7 @@ impl EditorTrait for Emacs {
 
     fn open(&mut self, file:&Path) {
         self.args.push(format!("--file"));
-        self.args.push(format!("{}", file.as_str().unwrap()));
+        self.args.push(format!("{}", file.to_str().unwrap()));
     }
 
     fn get_command(&self) -> Command {
