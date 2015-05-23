@@ -1,5 +1,3 @@
-#![feature(convert)]
-
 use std::path::{Path};
 use editors::{Kate, Emacs};
 use std::ascii::AsciiExt;
@@ -10,7 +8,7 @@ pub mod editors;
 
 impl Editor {
     pub fn new(name: &str) -> Option<Editor> {
-        match name.to_ascii_lowercase().as_str() {
+        match name.to_ascii_lowercase().as_ref() {
             "kate" => Some(Editor::Kate(Box::new(Kate::new()))),
             "emacs" => Some(Editor::Emacs(Box::new(Emacs::new()))),
             _ => None,
