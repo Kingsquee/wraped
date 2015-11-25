@@ -1,8 +1,10 @@
 use std::path::Path;
 use std::process::Command;
 pub use self::kate::Kate;
+pub use self::gedit::Gedit;
 pub use self::emacs::Emacs;
 mod kate;
+mod gedit;
 mod emacs;
 
 pub trait EditorTrait {

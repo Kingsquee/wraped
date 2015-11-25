@@ -61,8 +61,3 @@ cya bby"
     };
 
 }
-
-pub fn test() {
-    let mut e = Editor::new("kate").unwrap();
-    e.cursor(3,4);
-}

@@ -1,5 +1,5 @@
 use std::path::{Path};
-use editors::{Kate, Emacs};
+use editors::{Kate, Gedit, Emacs};
 use std::ascii::AsciiExt;
 use std::process::Command;
 pub use editors::EditorTrait;
@@ -10,6 +10,7 @@ impl Editor {
     pub fn new(name: &str) -> Option<Editor> {
         match name.to_ascii_lowercase().as_ref() {
             "kate" => Some(Editor::Kate(Box::new(Kate::new()))),
+            "gedit" => Some(Editor::Gedit(Box::new(Gedit::new()))),
             "emacs" => Some(Editor::Emacs(Box::new(Emacs::new()))),
             _ => None,
         }
@@ -18,6 +19,7 @@ impl Editor {
 
 pub enum Editor {
     Kate (Box<Kate>),
+    Gedit (Box<Gedit>),
     Emacs (Box<Emacs>),
 }
 
@@ -25,6 +27,7 @@ impl EditorTrait for Editor {
     fn cursor(&mut self, row:u64, col:u64) {
         match self {
             &mut Editor::Kate(ref mut e) => e.cursor(row, col),
+            &mut Editor::Gedit(ref mut e) => e.cursor(row, col),
             &mut Editor::Emacs(ref mut e) => e.cursor(row, col),
         }
     }
@@ -32,6 +35,7 @@ impl EditorTrait for Editor {
     fn open(&mut self, file: &Path) {
         match self {
             &mut Editor::Kate(ref mut e) => e.open(file),
+            &mut Editor::Gedit(ref mut e) => e.open(file),
             &mut Editor::Emacs(ref mut e) => e.open(file),
         }
     }
@@ -39,6 +43,7 @@ impl EditorTrait for Editor {
     fn get_command(&self) -> Command {
         match self {
             &Editor::Kate(ref e) => e.get_command(),
+            &Editor::Gedit(ref e) => e.get_command(),
             &Editor::Emacs(ref e) => e.get_command(),
         }
     }
