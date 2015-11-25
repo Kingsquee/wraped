@@ -14,7 +14,7 @@ fn main() {
 
     let args: Vec<String> = env::args().collect();
     let mut opts = Options::new();
-    opts.optopt("e", "editor", "Open the state struct in the editor of choice.", "EDITOR");
+    opts.optopt("e", "editor", "Open the file in the editor of choice.", "EDITOR");
 
     let matches = match opts.parse(&args[1..]) {
         Ok(m) => { m }
