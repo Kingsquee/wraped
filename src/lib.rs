@@ -1,5 +1,5 @@
 use std::path::{Path};
-use editors::{Kate, Gedit, Emacs};
+use editors::{Kate, Gedit, Emacs, Vim};
 use std::ascii::AsciiExt;
 use std::process::Command;
 pub use editors::EditorTrait;
@@ -12,6 +12,7 @@ impl Editor {
             "kate" => Some(Editor::Kate(Box::new(Kate::new()))),
             "gedit" => Some(Editor::Gedit(Box::new(Gedit::new()))),
             "emacs" => Some(Editor::Emacs(Box::new(Emacs::new()))),
+            "vim" => Some(Editor::Vim(Box::new(Vim::new()))),
             _ => None,
         }
     }
@@ -21,6 +22,7 @@ pub enum Editor {
     Kate (Box<Kate>),
     Gedit (Box<Gedit>),
     Emacs (Box<Emacs>),
+    Vim (Box<Vim>),
 }
 
 impl EditorTrait for Editor {
@@ -29,6 +31,7 @@ impl EditorTrait for Editor {
             &mut Editor::Kate(ref mut e) => e.cursor(row, col),
             &mut Editor::Gedit(ref mut e) => e.cursor(row, col),
             &mut Editor::Emacs(ref mut e) => e.cursor(row, col),
+            &mut Editor::Vim(ref mut e) => e.cursor(row, col),
         }
     }
 
@@ -37,6 +40,7 @@ impl EditorTrait for Editor {
             &mut Editor::Kate(ref mut e) => e.open(file),
             &mut Editor::Gedit(ref mut e) => e.open(file),
             &mut Editor::Emacs(ref mut e) => e.open(file),
+            &mut Editor::Vim(ref mut e) => e.open(file),
         }
     }
 
@@ -45,6 +49,7 @@ impl EditorTrait for Editor {
             &Editor::Kate(ref e) => e.get_command(),
             &Editor::Gedit(ref e) => e.get_command(),
             &Editor::Emacs(ref e) => e.get_command(),
+            &Editor::Vim(ref e) => e.get_command(),
         }
     }
 }
