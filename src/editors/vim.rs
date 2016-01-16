@@ -16,12 +16,7 @@ impl Vim {
 
 impl EditorTrait for Vim {
     fn cursor(&mut self, row:u64, col:u64) {
-        // Why isn't the column jumping working?
-        self.args.push("-c".to_string());
-        self.args.push(format!("\"cal cursor({}, {})\"", 2, 2));
-        //let s = format!("-c \"call setpos(\'.\',[0,{},{},0])\"", 4, 2);
-        //println!("{}", s);
-        //self.args.push(s);
+        self.args.push(format!("-c call cursor({}, {})", row, col));
     }
 
     fn open(&mut self, file:&Path) {
