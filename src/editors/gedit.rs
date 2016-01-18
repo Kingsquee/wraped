@@ -3,12 +3,14 @@ use std::process::Command;
 use super::EditorTrait;
 
 pub struct Gedit {
+    file_path: String,
     args: Vec<String>,
 }
 
 impl Gedit {
     pub fn new() -> Gedit {
         Gedit {
+            file_path: String::new(),
             args: Vec::new()
         }
     }
@@ -21,11 +23,14 @@ impl EditorTrait for Gedit {
     }
 
     fn open(&mut self, file:&Path) {
-        self.args.push(format!("{}", file.to_str().unwrap()));
+        self.file_path = file.to_str().unwrap().to_string();
     }
 
     fn get_command(&self) -> Command {
         let mut command: Command = Command::new("gedit");
+        
+        command.arg(&self.file_path);
+
         for arg in self.args.iter() {
             command.arg(arg);
         }
