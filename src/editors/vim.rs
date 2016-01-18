@@ -3,13 +3,15 @@ use std::process::Command;
 use super::EditorTrait;
 
 pub struct Vim {
-    args: String
+    files: Vec<String>,
+    args: Vec<String>,
 }
 
 impl Vim {
     pub fn new() -> Vim {
         Vim {
-            args: String::new()
+            files: Vec::new(),
+            args: Vec::new()
         }
     }
 }
@@ -20,11 +22,11 @@ impl Vim {
 
 impl EditorTrait for Vim {
     fn cursor(&mut self, row:u64, col:u64) {
-        self.args.push_str(&format!(":call cursor({}, {})<cr>", row, col));
+        self.args.push(format!("call cursor({}, {})", row, col));
     }
 
     fn open(&mut self, file:&Path) {
-        self.args.push_str(&format!(":e {}<cr>", file.to_str().unwrap().to_string()));   
+        self.files.push(file.to_str().unwrap().to_string());   
     }
 
     fn get_command(&self) -> Command {
@@ -41,8 +43,26 @@ impl EditorTrait for Vim {
         
         command.arg("--servername".to_string());
         command.arg(last_used_server_name);
-        command.arg("--remote-send".to_string());
-        command.arg(&self.args);
+        command.arg("--remote".to_string());
+
+        let mut args = "+".to_string();
+
+        for i in 0..self.args.len() {
+            args.push_str(&self.args[i]);
+            if i != self.args.len()-1 {
+                args.push('|');
+            }
+        }
+
+        command.arg(args);
+
+        let mut files = String::new();
+        for i in 0..self.files.len() {
+            files.push_str(&self.files[i])
+        }
+
+        command.arg(files);
+
         println!("command: {:?}", command);
         command
     }
