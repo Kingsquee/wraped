@@ -42,8 +42,8 @@ cya bby"
 ).unwrap();
     file.flush().unwrap();
 
-    editor.cursor(3, 32);
     editor.open(&file_path);
+    editor.cursor(3, 32);
     let mut command = editor.get_command();
 
     // Try to run this thing
