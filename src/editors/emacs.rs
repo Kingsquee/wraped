@@ -3,13 +3,15 @@ use std::process::Command;
 use super::EditorTrait;
 
 pub struct Emacs {
+    file_path: String,
     args: Vec<String>
 }
 
 impl Emacs {
     pub fn new() -> Emacs {
         Emacs {
-            args: Vec::new()
+            file_path: String::new(),
+            args: Vec::new(),
         }
     }
 }
@@ -20,16 +22,23 @@ impl EditorTrait for Emacs {
     }
 
     fn open(&mut self, file:&Path) {
-        self.args.push(format!("--file"));
-        self.args.push(format!("{}", file.to_str().unwrap()));
+        self.file_path = file.to_str().unwrap().to_string();
     }
 
     fn get_command(&self) -> Command {
-        let mut command: Command = Command::new("emacs");
+        // Setup emacs server flags
+        let mut command: Command = Command::new("emacsclient");
+        command.arg("--alternate-editor");
+        command.arg("emacs");
+        
+        //NOTE: Emacs arguments seem to specifically apply to the next file
         for arg in self.args.iter() {
             command.arg(arg);
         }
-        //println!("command: {:?}", command);
+        
+        command.arg(&self.file_path);
+        
+        println!("command: {:?}", command);
         command
     }
 }

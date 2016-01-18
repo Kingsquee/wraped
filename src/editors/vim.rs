@@ -3,14 +3,14 @@ use std::process::Command;
 use super::EditorTrait;
 
 pub struct Vim {
-    files: Vec<String>,
+    file_path: String,
     args: Vec<String>,
 }
 
 impl Vim {
     pub fn new() -> Vim {
         Vim {
-            files: Vec::new(),
+            file_path: String::new(),
             args: Vec::new()
         }
     }
@@ -26,7 +26,7 @@ impl EditorTrait for Vim {
     }
 
     fn open(&mut self, file:&Path) {
-        self.files.push(file.to_str().unwrap().to_string());   
+        self.file_path = file.to_str().unwrap().to_string();
     }
 
     fn get_command(&self) -> Command {
@@ -53,15 +53,9 @@ impl EditorTrait for Vim {
                 args.push('|');
             }
         }
-
         command.arg(args);
 
-        let mut files = String::new();
-        for i in 0..self.files.len() {
-            files.push_str(&self.files[i])
-        }
-
-        command.arg(files);
+        command.arg(&self.file_path);
 
         println!("command: {:?}", command);
         command
